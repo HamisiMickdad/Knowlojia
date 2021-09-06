@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/Knowlojia/app/src/main/res/layout/about.xml" value="0.23229166666666667" />
+        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/Knowlojia/app/src/main/res/layout/activity_android_tricks.xml" value="0.23229166666666667" />
+        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/Knowlojia/app/src/main/res/layout/activity_main.xml" value="0.21822916666666667" />
+        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/Knowlojia/app/src/main/res/layout/activity_post_details.xml" value="0.1" />
+        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/Knowlojia/app/src/main/res/layout/activity_privacy_policy.xml" value="0.23229166666666667" />
+        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/Knowlojia/app/src/main/res/layout/model_main.xml" value="0.1" />
+        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/Knowlojia/app/src/main/res/layout/row.xml" value="0.23229166666666667" />
+        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/Knowlojia/app/src/main/res/layout/toolbar.xml" value="0.23229166666666667" />
+        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/Knowlojia/app/src/main/res/menu/home.xml" value="0.23229166666666667" />
+        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/Knowlojia/app/src/main/res/menu/home_main.xml" value="0.23229166666666667" />
+        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/Knowlojia/app/src/main/res/xml/headers_preference.xml" value="0.23229166666666667" />
+        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/Knowlojia/app/src/main/res/xml/preferences.xml" value="0.23229166666666667" />
+        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/Knowlojia/app/src/main/res/xml/provider_paths.xml" value="0.23229166666666667" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

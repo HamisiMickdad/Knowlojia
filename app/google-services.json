@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "627483086706",
+    "firebase_url": "https://testprojects-1bdd0-default-rtdb.firebaseio.com",
+    "project_id": "testprojects-1bdd0",
+    "storage_bucket": "testprojects-1bdd0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:627483086706:android:8085b508d120d52ba857eb",
+        "android_client_info": {
+          "package_name": "com.zitano.knowlojia.admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "627483086706-ikrhu92bulbkvrujmajflrrfjc32jqum.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHP_2BVgsOnb4tNctZLoEN8jy7MLa0KdA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "627483086706-ikrhu92bulbkvrujmajflrrfjc32jqum.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:627483086706:android:5e351dc59d4d78e7a857eb",
+        "android_client_info": {
+          "package_name": "com.zitano.knowlojia.tech"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "627483086706-ikrhu92bulbkvrujmajflrrfjc32jqum.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHP_2BVgsOnb4tNctZLoEN8jy7MLa0KdA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "627483086706-ikrhu92bulbkvrujmajflrrfjc32jqum.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
