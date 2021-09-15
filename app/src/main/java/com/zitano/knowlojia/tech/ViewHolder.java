@@ -15,6 +15,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.textview.MaterialTextView;
 import com.squareup.picasso.Picasso;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
 public class ViewHolder extends RecyclerView.ViewHolder {
     View mView;
 
@@ -48,18 +51,23 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         MaterialTextView mDetailTv = mView.findViewById(R.id.rDescriptionTv);
         AppCompatImageView mImageIv = mView.findViewById(R.id.rImageView);
 
+        //content/description is in html/webform, we need to convert it to simple text using jsoup library
+        Document document = Jsoup.parse(description);
+
         //set data to views
         mTitleTv.setText(title);
+        mDetailTv.setText(document.text());
         //mDetailTv.setText(description);
 
-        PicassoImageGetter imageGetter = new PicassoImageGetter(mDetailTv);
+
+       /* PicassoImageGetter imageGetter = new PicassoImageGetter(mDetailTv);
         Spannable html;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
             html = (Spannable) Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY, imageGetter, null);
         } else {
             html = (Spannable) Html.fromHtml(description, imageGetter, null);
         }
-        mDetailTv.setText(html);
+        mDetailTv.setText(html);*/
         //mDetailTv.setMovementMethod(LinkMovementMethod.getInstance());
         //Picasso.get().load(image).into(mImageIv);
 

@@ -1,5 +1,7 @@
 package com.zitano.knowlojia.tech;
 
+import static androidx.webkit.WebSettingsCompat.FORCE_DARK_OFF;
+import static androidx.webkit.WebSettingsCompat.FORCE_DARK_ON;
 import static com.zitano.knowlojia.tech.Knowlojia.TAG;
 
 import androidx.annotation.NonNull;
@@ -10,10 +12,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.webkit.WebSettingsCompat;
+import androidx.webkit.WebViewFeature;
 
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
@@ -28,6 +33,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -46,11 +54,14 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.material.textview.MaterialTextView;
 import com.squareup.picasso.Picasso;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
 import java.io.File;
 import java.io.FileOutputStream;
 
 public class PostDetails extends AppCompatActivity {
-    MaterialTextView mTitleTv, mDetailTv;
+    MaterialTextView mTitleTv;
     AppCompatImageView mImageIv;
     Bitmap bitmap;
 
@@ -58,6 +69,7 @@ public class PostDetails extends AppCompatActivity {
 
     private static final int WRITE_EXTERNAL_STORAGE_CODE = 1;
     private AdView mAdView;
+    private WebView webView;
 
 
 
@@ -67,7 +79,8 @@ public class PostDetails extends AppCompatActivity {
         setContentView(R.layout.activity_post_details);
 
         //initialize views
-        mDetailTv = findViewById(R.id.descriptionTv);
+        //mDetailTv = findViewById(R.id.descriptionTv);
+        webView = findViewById(R.id.webView);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mTitleTv = findViewById(R.id.titleTv);
@@ -84,15 +97,46 @@ public class PostDetails extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setDomStorageEnabled(true);
+        webView.getSettings().setBuiltInZoomControls(true);
+        webView.setWebViewClient(new WebViewClient());
+        webView.setWebChromeClient(new WebChromeClient());
+
+        if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
+            switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
+                case Configuration.UI_MODE_NIGHT_YES:
+                    WebSettingsCompat.setForceDark(webView.getSettings(), FORCE_DARK_ON);
+                    break;
+                case Configuration.UI_MODE_NIGHT_NO:
+                case Configuration.UI_MODE_NIGHT_UNDEFINED:
+                    WebSettingsCompat.setForceDark(webView.getSettings(), FORCE_DARK_OFF);
+                    break;
+            }
+        }
+
         //set data to views
         mTitleTv.setText(title);
         actionBar.setTitle(title);
+
+        Document document = Jsoup.parse(desc);
+        document.select("img").attr("width", "100%");
+        document.select("figure").attr("style", "width: 80%"); // find all figures and set with to 80%
+        document.select("iframe").attr("style", "width: 100%"); // find all iframes and set with to 100%
+        document.outputSettings(new Document.OutputSettings().prettyPrint(false));//makes html() preserve linebreaks and spacing
+        String s = document.html();
+
+
+        //content contains webpage like html, so load in webview
+        webView.loadDataWithBaseURL(null,  "<style>img{display: inline;height: auto;}</style>"+String.valueOf(s), "text/html", "UTF-8", null);
+        //webView.loadDataWithBaseURL(null, "<style>img{display: inline;height: auto;max-width: 100%;}</style>" + desc, "text/html", "UTF-8", null);
 
 
         //mDetailTv.setText(desc);
 
 
-        PicassoImageGetter imageGetter = new PicassoImageGetter(mDetailTv);
+
+       /* PicassoImageGetter imageGetter = new PicassoImageGetter(mDetailTv);
         Spannable html;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
             html = (Spannable) Html.fromHtml(desc, Html.FROM_HTML_MODE_LEGACY, imageGetter, null);
@@ -101,7 +145,7 @@ public class PostDetails extends AppCompatActivity {
         }
         mDetailTv.setMovementMethod(LinkMovementMethod.getInstance());
         mDetailTv.setText(html);
-
+*/
         /*Picasso
                 .get()
                 .load(image)
@@ -153,7 +197,7 @@ public class PostDetails extends AppCompatActivity {
             //get image from Image View as  bitmap
             bitmap = ((BitmapDrawable)mImageIv.getDrawable()).getBitmap();
             //get title and description and save to string s
-            String s = mTitleTv.getText().toString() + "\n" + mDetailTv.getText().toString();
+            //String s = mTitleTv.getText().toString() + "\n" + mDetailTv.getText().toString();
 
             File file = new File(getExternalCacheDir(), "sample.jpg");
             FileOutputStream fOut = new FileOutputStream(file);
@@ -169,7 +213,7 @@ public class PostDetails extends AppCompatActivity {
             intent.setType("image/jpg");
             startActivity(Intent.createChooser(intent, "Share via"));*/
             Intent share = new Intent("android.intent.action.SEND");
-            share.putExtra(Intent.EXTRA_TEXT, s);//put the text
+            //share.putExtra(Intent.EXTRA_TEXT, s);//put the text
             //share.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
             share.setType("image/jpeg");
             Uri uri = FileProvider.getUriForFile(PostDetails.this, BuildConfig.APPLICATION_ID+ ".provider", (file));

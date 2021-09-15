@@ -20,6 +20,7 @@
     </com.google.android.gms.ads.AdView>
 
     <androidx.core.widget.NestedScrollView
+        android:background="@color/colorBlack01"
         android:layout_below="@+id/adView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -35,17 +36,20 @@
             card_view:cardCornerRadius="8dp"
             card_view:cardElevation="3dp"
             card_view:cardUseCompatPadding="true"
+            android:background="@color/colorBlack01"
             android:focusable="true">
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@color/colorBlack01"
                 android:orientation="vertical">
 
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imageView"
+                    android:background="@color/colorBlack01"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_marginBottom="8dp"
@@ -58,12 +62,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Title"
+                    android:background="@color/colorBlack01"
                     android:textColor="@color/colorBlack"
                     android:textSize="22sp"
                     android:textStyle="bold" />
 
 
-                <com.google.android.material.textview.MaterialTextView
+              <!--  <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/descriptionTv"
                     style="@style/TextAppearance.AppCompat.Body1"
                     android:layout_width="match_parent"
@@ -72,7 +77,14 @@
                     android:textColor="@color/colorBlack"
                     android:textColorLink="@android:color/holo_red_dark"
                     android:textIsSelectable="true"
-                    android:textSize="20sp" />
+                    android:textSize="20sp" />-->
+
+                <!--WebView Load Post Body-->
+                <WebView
+                    android:id="@+id/webView"
+                    android:padding="10dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

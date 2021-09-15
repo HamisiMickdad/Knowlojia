@@ -11,17 +11,20 @@
     card_view:cardCornerRadius="8dp"
     card_view:cardElevation="3dp"
     card_view:cardUseCompatPadding="true"
+    android:background="@color/colorBlack01"
     android:focusable="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorBlack01"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/rImageView"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:background="@color/colorBlack01"
             android:layout_marginBottom="8dp"
             android:scaleType="centerCrop"
             android:adjustViewBounds="true" />
@@ -36,6 +39,7 @@
             android:padding="4dp"
             android:text="Title"
             android:textColor="@color/colorBlack"
+            android:background="@color/colorBlack01"
             android:textSize="22sp"
             android:textStyle="bold" />
 
@@ -52,6 +56,7 @@
             android:layout_height="wrap_content"
             android:text="This is the Posts Description"
             android:textColor="@color/colorBlack"
+            android:background="@color/colorBlack01"
             android:textSize="18sp"
             />
 
