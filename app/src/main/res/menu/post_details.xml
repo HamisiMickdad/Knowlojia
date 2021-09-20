@@ -7,10 +7,6 @@
         android:icon="@drawable/ic_action_share"
         android:title="@string/share"
         app:showAsAction="always" />
-    <item
-        android:id="@+id/sort"
-        android:title="@string/sort_blogs"
-        />
 
     <item
         android:id="@+id/rate"

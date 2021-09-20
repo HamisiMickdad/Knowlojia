@@ -7,6 +7,7 @@
     <string name="submit_feedback">Submit</string>
     <string name="about">About app</string>
     <string name="rate_us_please">Rate/Update</string>
+    <string name="sort_blogs">Sort Blogs</string>
     <string name="empty_view">No Internet connection. Swipe Down to Refresh.</string>
 
     <string name="About_App">Developed and Designed by Aross Developers. \nDeveloper:Aross Hamisi.\nAll suggestions for improvements are welcomed.</string>
@@ -15,6 +16,7 @@
     <string name="your_email_address">Email Address</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="terms">Terms of Use</string>
+    <string name="font_size">18sp</string>
     <string name="ad_unit_id">ca-app-pub-3940256099942544/8135179316</string>
 
     <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>

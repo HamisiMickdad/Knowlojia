@@ -20,6 +20,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -27,6 +28,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.method.LinkMovementMethod;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,6 +36,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -100,9 +103,16 @@ public class PostDetails extends AppCompatActivity {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setDomStorageEnabled(true);
         webView.getSettings().setBuiltInZoomControls(true);
+        //webSettings.setLayoutAlgorithm(LayoutAlgorithm.NORMAL);
         webView.setWebViewClient(new WebViewClient());
         webView.setWebChromeClient(new WebChromeClient());
-
+        webView.setVerticalScrollBarEnabled(false);
+        webView.setHorizontalScrollBarEnabled(false);
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setDefaultFontSize(20);
+        //webSettings.setTextZoom(webSettings.getTextZoom()-50); // where 90 is 90%; default value is ... 100
+        //settings.setTextSize(WebSettings.TextSize.NORMAL);
+        //webSettings.setTextSize(WebSettings.TextSize.LARGER);
         if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
             switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
                 case Configuration.UI_MODE_NIGHT_YES:
@@ -120,17 +130,22 @@ public class PostDetails extends AppCompatActivity {
         actionBar.setTitle(title);
 
         Document document = Jsoup.parse(desc);
-        document.select("img").attr("width", "100%");
+        document.select("img").attr("style", "display: inline-block;height: auto;max-width: 100%;");
         document.select("figure").attr("style", "width: 80%"); // find all figures and set with to 80%
+        //document.select("font-size").attr("style", "xx-large;");
         document.select("iframe").attr("style", "width: 100%"); // find all iframes and set with to 100%
         document.outputSettings(new Document.OutputSettings().prettyPrint(false));//makes html() preserve linebreaks and spacing
         String s = document.html();
 
-
+        //Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Microsoft_Sans_Serif_Regular_font.ttf");
+        //String pish = "<html><head><style type=\"text/css\">@font-face {font-family: sans-serif;src: "+typeface+"}body {font-family: sans-serif;font-size: large;text-align: justify;}</style></head><body>";
+        //String pas = "</body></html>";
         //content contains webpage like html, so load in webview
-        webView.loadDataWithBaseURL(null,  "<style>img{display: inline;height: auto;}</style>"+String.valueOf(s), "text/html", "UTF-8", null);
-        //webView.loadDataWithBaseURL(null, "<style>img{display: inline;height: auto;max-width: 100%;}</style>" + desc, "text/html", "UTF-8", null);
-
+        //webView.loadDataWithBaseURL(null,  "<style>img{display: contents;height: auto;}</style>"+String.valueOf(s), "text/html", "UTF-8", null);
+        //webView.loadDataWithBaseURL(null, "<style>img{display: inline-block;height: auto;max-width: 100%;}</style>" + s, "text/html", "UTF-8", null);
+        String encodedHtml = Base64.encodeToString(s.getBytes(), Base64.NO_PADDING);
+        //String encodedHtml = pish + s + pas;
+        webView.loadData(encodedHtml, "text/html", "base64");
 
         //mDetailTv.setText(desc);
 
@@ -241,7 +256,7 @@ public class PostDetails extends AppCompatActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.home, menu);
+        getMenuInflater().inflate(R.menu.post_details, menu);
         return true;
     }
 
@@ -271,7 +286,7 @@ public class PostDetails extends AppCompatActivity {
         } else if (id == R.id.menu_share) {
             Intent sharingIntent = new Intent(Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
-            String shareBody = "Hey check out Knowlojia tech blog app, that offers free DIYs(Do it Yourself) tutorials for free. Whether you are fascinated by technology or not, you will still learn a thin or two. Install the app from this link here https://play.google.com/store/apps/details?id=" + getPackageName();
+            String shareBody = "Hey check out Knowlojia tech blog app, that offers free DIYs(Do it Yourself) tutorials for free. Whether you are fascinated by technology or not, you will still learn a thing or two. Install the app from this link here https://play.google.com/store/apps/details?id=" + getPackageName();
             //sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Best Football Predictions App on Play Store");
             sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
             startActivity(sharingIntent);

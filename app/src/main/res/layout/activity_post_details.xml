@@ -62,6 +62,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Title"
+                    android:padding="10dp"
                     android:background="@color/colorBlack01"
                     android:textColor="@color/colorBlack"
                     android:textSize="22sp"
@@ -83,13 +84,13 @@
                 <WebView
                     android:id="@+id/webView"
                     android:padding="10dp"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="2dp"
                     android:orientation="horizontal">
 
                     <Button

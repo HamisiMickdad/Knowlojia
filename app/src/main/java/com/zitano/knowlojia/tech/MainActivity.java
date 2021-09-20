@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,8 +36,16 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
     // The number of native ads to load and display.
@@ -57,8 +66,6 @@ public class MainActivity extends AppCompatActivity {
     private AdView mAdView;
     Toolbar toolbar;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         //FirebaseMessaging.getInstance().subscribeToTopic("recipes");
 
 
+        FirebaseMessaging.getInstance().subscribeToTopic("zitano");
         //recyclerview
         mRecyclerView = findViewById(R.id.recycler_view);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -181,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
         } else if (id == R.id.menu_share) {
             Intent sharingIntent = new Intent(Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
-            String shareBody = "Hey check out Knowlojia tech blog app, that offers free DIYs(Do it Yourself) tutorials for free. Whether you are fascinated by technology or not, you will still learn a thin or two. Install the app from this link here https://play.google.com/store/apps/details?id=" + getPackageName();
+            String shareBody = "Hey check out Knowlojia tech blog app, that offers free DIYs(Do it Yourself) tutorials for free. Whether you are fascinated by technology or not, you will still learn a thing or two. Install the app from this link here https://play.google.com/store/apps/details?id=" + getPackageName();
             //sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Best Football Predictions App on Play Store");
             sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
             startActivity(sharingIntent);

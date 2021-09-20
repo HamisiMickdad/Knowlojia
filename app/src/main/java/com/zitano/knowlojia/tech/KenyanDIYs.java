@@ -4,6 +4,7 @@ import static com.zitano.knowlojia.tech.Knowlojia.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
@@ -74,20 +76,20 @@ public class KenyanDIYs extends AppCompatActivity {
         actionBar.setDisplayShowHomeEnabled(true);
 
 
-        //mSharedPref = getSharedPreferences("SortSettings", MODE_PRIVATE);
-        //String mSorting = mSharedPref.getString("Sort", "oldest"); //where if no setting is selected newest is default
+        mSharedPref = getSharedPreferences("SortSettings", MODE_PRIVATE);
+        String mSorting = mSharedPref.getString("Sort", "newest"); //where if no setting is selected newest is default
 
-        //if (mSorting.equals("newest")) {
+        if (mSorting.equals("newest")) {
         mLayoutManager = new LinearLayoutManager(this);
         //this will load the items from bottom means newest first
         mLayoutManager.setReverseLayout(true);
         mLayoutManager.setStackFromEnd(true);
-       /* } else if (mSorting.equals("oldest")) {
+        } else if (mSorting.equals("oldest")) {
             mLayoutManager = new LinearLayoutManager(this);
             //this will load the items from top means oldest first
             mLayoutManager.setReverseLayout(false);
             mLayoutManager.setStackFromEnd(false);
-        }*/
+        }
 
 
         //recyclerview
@@ -201,6 +203,8 @@ public class KenyanDIYs extends AppCompatActivity {
         if (id == android.R.id.home) {
             //showInterstitials();
             finish();
+        } else if (id == R.id.sort) {
+            showSortDialog();
         } else if (id == R.id.about) {
             showDialogAbout();
         } else if (id == R.id.settings) {
@@ -222,7 +226,7 @@ public class KenyanDIYs extends AppCompatActivity {
         } else if (id == R.id.menu_share) {
             Intent sharingIntent = new Intent(Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
-            String shareBody = "Hey check out Knowlojia tech blog app, that offers free DIYs(Do it Yourself) tutorials for free. Whether you are fascinated by technology or not, you will still learn a thin or two. Install the app from this link here https://play.google.com/store/apps/details?id=" + getPackageName();
+            String shareBody = "Hey check out Knowlojia tech blog app, that offers free DIYs(Do it Yourself) tutorials for free. Whether you are fascinated by technology or not, you will still learn a thing or two. Install the app from this link here https://play.google.com/store/apps/details?id=" + getPackageName();
             //sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Best Hairstyles App on Play Store");
             sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
             startActivity(sharingIntent);
@@ -335,5 +339,38 @@ public class KenyanDIYs extends AppCompatActivity {
             Log.d("TAG", "The interstitial ad wasn't ready yet.");
             //startGame();
         }
+    }
+    private void showSortDialog() {
+        //options to display in dialog
+        String[] sortOptions = {"Newest", "Oldest"};
+        //create alart dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Sort By")
+                .setIcon(R.drawable.ic_action_sort)
+                .setItems(sortOptions, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // The 'which' argument contains the index position of the selected item
+                        //0 means "Newest" and 1 means "oldest"
+                        if (which == 0) {
+                            // Sort from newest
+                            //Edit our shared preferences
+                            SharedPreferences.Editor editor = mSharedPref.edit();
+                            editor.putString("Sort", "newest"); //where 'Sort' is key & 'newest' is value
+                            editor.apply(); // apply/save the value in our shared preferences
+                            recreate(); //restart activity to take effect
+
+
+                        } else if (which == 1) {
+                            //sort from oldest
+                            //Edit our shared preferences
+                            SharedPreferences.Editor editor = mSharedPref.edit();
+                            editor.putString("Sort", "oldest"); //where 'Sort' is key & 'oldest' is value
+                            editor.apply(); // apply/save the value in our shared preferences
+                            recreate(); //restart activity to take effect
+                        }
+                    }
+                });
+        builder.show();
     }
 }
